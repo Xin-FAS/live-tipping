@@ -1,0 +1,69 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				// 页面中的顶部导航栏
+				"app-plus": {
+					"titleNView": {
+						"titleText": "直播",
+						"titleAlign": "left",
+						"buttons": [
+							{
+								"type": "menu"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/my/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/live/index",
+			"style": {
+				"app-plus": {
+					"titleNView": {
+						"titleText": false
+					}
+				}
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "直播",
+		"navigationBarBackgroundColor": "#15559A",
+		"backgroundColor": "#15559A"
+	},
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#707070",
+		"selectedColor": "#15559A",
+		"borderStyle": "black",
+		// 中间的按钮
+		"midButton": {
+			"iconPath": "static/logo.png",
+			"iconWidth": "60px",
+			"height": "65px"
+		},
+		"list": [
+			{
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"pagePath": "pages/index/index",
+				"text": "发现"
+			},
+			{
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"pagePath": "pages/my/index",
+				"text": "我的"
+			}
+		]
+	}
+}
