@@ -27,9 +27,7 @@
 			"path": "pages/live/index",
 			"style": {
 				"app-plus": {
-					"titleNView": {
-						"titleText": false
-					}
+					"titleNView": false
 				}
 			}
 		}
@@ -47,20 +45,20 @@
 		"borderStyle": "black",
 		// 中间的按钮
 		"midButton": {
-			"iconPath": "static/logo.png",
+			"iconPath": "static/tabbar/min.png",
 			"iconWidth": "60px",
 			"height": "65px"
 		},
 		"list": [
 			{
-				"iconPath": "static/logo.png",
-				"selectedIconPath": "static/logo.png",
+				"iconPath": "static/tabbar/find.png",
+				"selectedIconPath": "static/tabbar/find-selected.png",
 				"pagePath": "pages/index/index",
 				"text": "发现"
 			},
 			{
-				"iconPath": "static/logo.png",
-				"selectedIconPath": "static/logo.png",
+				"iconPath": "static/tabbar/my.png",
+				"selectedIconPath": "static/tabbar/my-selected.png",
 				"pagePath": "pages/my/index",
 				"text": "我的"
 			}

@@ -31,14 +31,14 @@ export default {
         >
             <swiper-item v-for="item in 3" :key="item">
                 <view>
-                    <image src="../../static/logo.png" mode="aspectFit" style="width: 750rpx;height:250rpx;" />
+                    <image :src="require(`@/static/demo/banner/${item}.png`)" mode="aspectFit" style="width: 750rpx;height:250rpx;" />
                 </view>
             </swiper-item>
         </swiper>
         <!-- 列表部分 -->
         <view class="flex flex-wrap">
             <view class="list-item" v-for="item in 8" @click="toLive">
-                <image src="../../static/logo.png" class="rounded"  mode="aspectFill" />
+                <image src="@/static/demo/1.jpg" class="rounded"  mode="aspectFill" />
                 <view class="abs-base left-t">
                     <text class="iconfont icon-jinbi1"></text>
                     <text class="text-white" style="margin-left: 10rpx">0</text>

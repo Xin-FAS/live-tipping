@@ -1,0 +1,95 @@
+<script>
+export default {
+    name: "index",
+	data () {
+		return { 
+			statusBarHeight: 0
+		}
+	},
+	onLoad () {
+		// 获取设备状态栏高度
+		const res = uni.getSystemInfoSync()
+		this.statusBarHeight = res.statusBarHeight
+	}
+}
+</script>
+
+<template>
+    <view class="page">
+		<video
+			src="https://www.w3schools.com/html/movie.mp4"
+			style="flex: 1;"
+			autoplay
+			:controls="false"
+		/>
+		<!-- 顶部状态展示部分 -->
+		<view class="live-top__warpper" :style="{
+			top: statusBarHeight + 'px'
+		}">
+			<!-- 个人信息展示部分 -->
+			<view class="live-top__content px-2 flex justify-between">
+				<view class="flex rounded-circle" style="background: red;width: 325rpx">
+					<view class="p">
+						<image style="width: 70rpx;height: 70rpx;" class="rounded-circle " src="@/static/demo/1.jpg" mode="aspectFill"></image>
+					</view>
+				</view>
+			</view>
+			<!-- 金币 -->
+			<view style="height: 80rpx;" class="bg-primary"></view>
+			<!-- 礼物 -->
+			<view style="height: 500rpx;">
+				<view class="bg-success" style="width: 520rpx;height: 500rpx;"></view>
+			</view>
+		</view>
+		<!-- 弹幕 -->
+		<view class="bg-warning live-scrolling__warpper">
+			
+		</view>
+		<!-- 底部礼物栏部分 -->
+		<view class="live-bottom__warpper">
+			<view class="live-bottom__content">
+				
+			</view>
+		</view>
+    </view>
+</template>
+
+<style scoped lang="scss">
+	.page {
+		flex: 1;
+	}
+	// 顶部
+	.live-top__warpper {
+		position: fixed;
+		left: 0;
+		right: 0;
+		
+		.live-top__content {
+			height: 80rpx;
+			background-color: sandybrown;
+		}
+	}
+	// 弹幕
+	.live-scrolling__warpper {
+		position: fixed;
+		bottom: 120rpx;
+		left: 0;
+		right: 0;
+		bottom: 120rpx;
+		width: 520rpx;
+		height: 300rpx;
+	}
+	// 底部
+	.live-bottom__warpper {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		
+		.live-bottom__content {
+			height: 120rpx;
+			background-color: sandybrown;
+		}
+	}
+	
+</style>
