@@ -1,95 +1,157 @@
 <script>
-export default {
-    name: "index",
-	data () {
-		return { 
-			statusBarHeight: 0
-		}
-	},
-	onLoad () {
-		// 获取设备状态栏高度
-		const res = uni.getSystemInfoSync()
-		this.statusBarHeight = res.statusBarHeight
-	}
-}
+    import Fgift from "@/components/live/Fgift.vue";
+
+    export default {
+        name: "index",
+        components: {
+            Fgift
+        },
+        data () {
+            return {
+                statusBarHeight: 0
+            }
+        },
+        onLoad () {
+            // 获取设备状态栏高度
+            const res = uni.getSystemInfoSync()
+            this.statusBarHeight = res.statusBarHeight
+        },
+        mounted () {
+            setInterval(() => {
+                this.$refs.giftRef.send({
+                    username: '张飞',
+                    avatar: '',
+                    giftName: '皇冠',
+                    giftImage: '/static/gif/1.png',
+                    num: 5,
+                })
+            }, 1000)
+        }
+    }
 </script>
 
 <template>
     <view class="page">
-		<video
-			src="https://www.w3schools.com/html/movie.mp4"
-			style="flex: 1;"
-			autoplay
-			:controls="false"
-		/>
-		<!-- 顶部状态展示部分 -->
-		<view class="live-top__warpper" :style="{
+        <video
+                src="https://www.w3schools.com/html/movie.mp4"
+                style="flex: 1;"
+                autoplay
+                :controls="false">
+        </video>
+        <!-- 顶部状态展示部分 -->
+        <view class="live-top__warpper" :style="{
 			top: statusBarHeight + 'px'
 		}">
-			<!-- 个人信息展示部分 -->
-			<view class="live-top__content px-2 flex justify-between">
-				<view class="flex rounded-circle" style="background: red;width: 325rpx">
-					<view class="p">
-						<image style="width: 70rpx;height: 70rpx;" class="rounded-circle " src="@/static/demo/1.jpg" mode="aspectFill"></image>
-					</view>
-				</view>
-			</view>
-			<!-- 金币 -->
-			<view style="height: 80rpx;" class="bg-primary"></view>
-			<!-- 礼物 -->
-			<view style="height: 500rpx;">
-				<view class="bg-success" style="width: 520rpx;height: 500rpx;"></view>
-			</view>
-		</view>
-		<!-- 弹幕 -->
-		<view class="bg-warning live-scrolling__warpper">
-			
-		</view>
-		<!-- 底部礼物栏部分 -->
-		<view class="live-bottom__warpper">
-			<view class="live-bottom__content">
-				
-			</view>
-		</view>
+            <!-- 个人信息展示部分 -->
+            <view class="live-top__content px-2 flex justify-between">
+                <view class="flex rounded-circle" style="background-color: rgba(0,0,0,.4);width: 325rpx">
+                    <view class="p">
+                        <image style="width: 70rpx;height: 70rpx;" class="rounded-circle " src="@/static/demo/1.jpg"
+                               mode="aspectFill"></image>
+                    </view>
+                    <view class="flex-1 flex flex-column justify-center">
+                        <text class="text-white font-sm">昵称</text>
+                        <text class="text-white font-sm">1000</text>
+                    </view>
+                    <view class="p">
+                        <view class="rounded-circle flex align-center justify-center bg-danger"
+                              style="width: 70rpx;height: 70rpx;">
+                            <text class="text-white">+</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="flex rounded-circle" style="width: 325rpx">
+                    <scroll-view scroll-x class="flex-1 flex">
+                        <view class="p" v-for="i in 15">
+                            <image style="width: 70rpx;height: 70rpx;" class="rounded-circle " src="@/static/demo/1.jpg"
+                                   mode="aspectFill"></image>
+                        </view>
+                    </scroll-view>
+                    <view class="p">
+                        <view class="rounded-circle flex align-center justify-center bg-primary"
+                              style="width: 70rpx;height: 70rpx;">
+                            <text class="text-white font-sm">1000</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!-- 金币 -->
+            <view style="height: 80rpx;" class="bg-primary px-2 my-2">
+                <view class="flex rounded-circle" style="width: 325rpx;height: 80rpx;background-color: rgba(0,0,0,.4);">
+                    <view class="p flex align-center">
+                        <text class="text-warning">金币</text>
+                    </view>
+                    <view class="flex-1 flex flex-column justify-center">
+                        <text class="text-white font-sm">1000</text>
+                    </view>
+                </view>
+            </view>
+            <!-- 礼物 -->
+            <Fgift ref="giftRef"></Fgift>
+        </view>
+        <!-- 弹幕 -->
+        <view class="bg-warning live-scrolling__warpper">
+
+        </view>
+        <!-- 底部礼物栏部分 -->
+        <view class="live-bottom__warpper flex align-center justify-center">
+            <view class="px-2">
+                <view class="px-3 btn">
+                    <text class="text-white font">说点什么...</text>
+                </view>
+            </view>
+            <view class="flex align-center">
+                <view class="btn">
+                    <view class="iconfont"></view>
+                </view>
+            </view>
+        </view>
     </view>
 </template>
 
 <style scoped lang="scss">
-	.page {
-		flex: 1;
-	}
-	// 顶部
-	.live-top__warpper {
-		position: fixed;
-		left: 0;
-		right: 0;
-		
-		.live-top__content {
-			height: 80rpx;
-			background-color: sandybrown;
-		}
-	}
-	// 弹幕
-	.live-scrolling__warpper {
-		position: fixed;
-		bottom: 120rpx;
-		left: 0;
-		right: 0;
-		bottom: 120rpx;
-		width: 520rpx;
-		height: 300rpx;
-	}
-	// 底部
-	.live-bottom__warpper {
-		position: fixed;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		
-		.live-bottom__content {
-			height: 120rpx;
-			background-color: sandybrown;
-		}
-	}
-	
+    .page {
+        flex: 1;
+    }
+
+    // 顶部
+    .live-top__warpper {
+        position: fixed;
+        left: 0;
+        right: 0;
+
+        .live-top__content {
+            height: 80rpx;
+            background-color: sandybrown;
+        }
+    }
+
+    // 弹幕
+    .live-scrolling__warpper {
+        position: fixed;
+        bottom: 120rpx;
+        left: 0;
+        right: 0;
+        bottom: 120rpx;
+        width: 520rpx;
+        height: 300rpx;
+    }
+
+    // 底部
+    .live-bottom__warpper {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 120rpx;
+
+        .btn {
+            height: 80rpx;
+            border-radius: 10rpx;
+            background-color: rgba(255,255,255,.12);
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
 </style>
