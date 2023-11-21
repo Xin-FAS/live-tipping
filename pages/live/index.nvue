@@ -1,14 +1,19 @@
 <script>
     import Fgift from "@/components/live/Fgift.vue";
+    import Fdanmu from "@/components/live/Fdanmu.vue";
+    import uniPopup from "@/components/uni-popup_1.8.4/components/uni-popup/uni-popup.vue";
 
     export default {
         name: "index",
         components: {
-            Fgift
+            Fgift,
+            uniPopup,
+            Fdanmu
         },
         data () {
             return {
-                statusBarHeight: 0
+                statusBarHeight: 0,
+                content: '',
             }
         },
         onLoad () {
@@ -26,6 +31,14 @@
                     num: 5,
                 })
             }, 1000)
+        },
+        methods: {
+            submit () {
+                this.$refs.inputs.close()
+            },
+            openInput () {
+                this.$refs.inputs.open()
+            }
         }
     }
 </script>
@@ -79,7 +92,7 @@
             <view style="height: 80rpx;" class="bg-primary px-2 my-2">
                 <view class="flex rounded-circle" style="width: 325rpx;height: 80rpx;background-color: rgba(0,0,0,.4);">
                     <view class="p flex align-center">
-                        <text class="text-warning">金币</text>
+                        <text class="text-warning" style="margin-left: 20rpx;font-size: 30rpx;">金币</text>
                     </view>
                     <view class="flex-1 flex flex-column justify-center">
                         <text class="text-white font-sm">1000</text>
@@ -90,22 +103,37 @@
             <Fgift ref="giftRef"></Fgift>
         </view>
         <!-- 弹幕 -->
-        <view class="bg-warning live-scrolling__warpper">
-
-        </view>
+        <Fdanmu></Fdanmu>
         <!-- 底部礼物栏部分 -->
-        <view class="live-bottom__warpper flex align-center justify-center">
+        <view class="live-bottom__warpper flex align-center justify-between">
             <view class="px-2">
-                <view class="px-3 btn">
+                <view class="px-3 btn" @click="openInput">
                     <text class="text-white font">说点什么...</text>
                 </view>
             </view>
             <view class="flex align-center">
-                <view class="btn">
-                    <view class="iconfont"></view>
+                <view class="btn btn-icon">
+                    <text style="font-family: iconfont-unicode;font-size: 80rpx;" class="text-warning">&#xe6cf;</text>
+                </view>
+                <view class="btn btn-icon bg-warning">
+                    <text style="font-family: iconfont-unicode;font-size: 40rpx;">&#xe817;</text>
+                </view>
+                <view class="btn btn-icon">
+                    <text style="font-family: iconfont-unicode;font-size: 40rpx;" class="text-white">&#xe86e;</text>
+                </view>
+                <view class="btn btn-icon">
+                    <text style="font-family: iconfont-unicode;font-size: 40rpx;" class="text-white">&#xeca0;</text>
                 </view>
             </view>
         </view>
+        <uni-popup ref="inputs" type="bottom" style="position: absolute">
+            <view class="bg-white flex align-center px-2" style="height: 120rpx;">
+                <input adjust-position type="text" v-model="content" class="border rounded flex-1 px-2 font-md" placeholder="请输入评论..." style="height: 80rpx;"></input>
+                <view class="bg-main flex align-center justify-center py-2 px-2 ml-2 rounded" @click="submit">
+                    <text class="font text-white">发送</text>
+                </view>
+            </view>
+        </uni-popup>
     </view>
 </template>
 
@@ -126,17 +154,6 @@
         }
     }
 
-    // 弹幕
-    .live-scrolling__warpper {
-        position: fixed;
-        bottom: 120rpx;
-        left: 0;
-        right: 0;
-        bottom: 120rpx;
-        width: 520rpx;
-        height: 300rpx;
-    }
-
     // 底部
     .live-bottom__warpper {
         position: fixed;
@@ -145,13 +162,19 @@
         bottom: 0;
         height: 120rpx;
 
-        .btn {
-            height: 80rpx;
-            border-radius: 10rpx;
-            background-color: rgba(255,255,255,.12);
-            justify-content: center;
-            align-items: center;
-        }
+
+    }
+    .btn {
+        height: 80rpx;
+        border-radius: 100rpx;
+        background: rgba(255,255,255,.12);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-icon {
+        width: 80rpx;
+        margin-right: 20rpx;
     }
 
 </style>
