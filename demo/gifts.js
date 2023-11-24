@@ -1,0 +1,41 @@
+export default [{
+	"image": "/static/gif/1.png",
+	"id": 1,
+	"name": "皇冠",
+	"coin": 10
+}, {
+	"image": "/static/gif/2.png",
+	"id": 2,
+	"name": "鸡腿",
+	"coin": 21
+}, {
+	"image": "/static/gif/3.png",
+	"id": 3,
+	"name": "蛋糕",
+	"coin": 30
+}, {
+	"image": "/static/gif/4.png",
+	"id": 4,
+	"name": "海螺",
+	"coin": 4
+}, {
+	"image": "/static/gif/5.png",
+	"id": 5,
+	"name": "火箭",
+	"coin": 500
+}, {
+	"image": "/static/gif/6.png",
+	"id": 6,
+	"name": "棒棒哒",
+	"coin": 6
+}, {
+	"image": "/static/gif/7.png",
+	"id": 7,
+	"name": "钻石",
+	"coin": 777
+}, {
+	"image": "/static/gif/8.png",
+	"id": 8,
+	"name": "甜品",
+	"coin": 80
+}]

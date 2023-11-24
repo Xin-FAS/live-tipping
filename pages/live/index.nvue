@@ -2,6 +2,7 @@
     import Fgift from "@/components/live/Fgift.vue";
     import Fdanmu from "@/components/live/Fdanmu.vue";
     import uniPopup from "@/components/uni-popup_1.8.4/components/uni-popup/uni-popup.vue";
+    import giftsDemo from '@/demo/gifts'
 
     export default {
         name: "index",
@@ -14,6 +15,8 @@
             return {
                 statusBarHeight: 0,
                 content: '',
+                gifts: [],
+                giftActiveId: 0
             }
         },
         onLoad () {
@@ -22,22 +25,76 @@
             this.statusBarHeight = res.statusBarHeight
         },
         mounted () {
-            setInterval(() => {
-                this.$refs.giftRef.send({
-                    username: '张飞',
-                    avatar: '',
-                    giftName: '皇冠',
-                    giftImage: '/static/gif/1.png',
-                    num: 5,
-                })
-            }, 1000)
+            // 模拟礼物
+            // setInterval(() => {
+            //     this.$refs.giftRef.send({
+            //         username: '张飞',
+            //         avatar: '',
+            //         giftName: '皇冠',
+            //         giftImage: '/static/gif/1.png',
+            //         num: 5,
+            //     })
+            // }, 1000)
+            // 模拟弹幕
+            // let id = 1
+            // setInterval(() => {
+            //     this.$refs.fdanmu.send({
+            //         id,
+            //         name: '王五',
+            //         content: '我发了一段话！' + id++
+            //     })
+            // }, 1000)
+            // 初始礼物数据
+            this.gifts = giftsDemo
         },
         methods: {
+            // 返回上一页
+            back () {
+                uni.navigateBack({
+                    delta: 1
+                })
+            },
             submit () {
                 this.$refs.inputs.close()
+                if (this.content === '') return
+                this.$refs.fdanmu.send({
+                    id: Math.random() * 100,
+                    name: '张三',
+                    content: this.content
+                })
+                this.content = ''
             },
             openInput () {
                 this.$refs.inputs.open()
+            },
+            openGift () {
+                this.$refs.giftPopup.open()
+            },
+            closeGift () {
+                this.$refs.giftPopup.close()
+            },
+            // 发送礼物
+            sendGift () {
+                if (this.giftActiveId === undefined) return uni.showToast({
+                    title: '请选择要送的礼物~',
+                    icon: 'none'
+                })
+                const findGift = this.gifts.find(v => v.id === this.giftActiveId)
+                if (!findGift) return
+                this.$refs.giftRef.send({
+                    username: '张飞',
+                    avatar: '',
+                    giftName: findGift.name,
+                    giftImage: findGift.image,
+                    num: 5,
+                })
+                this.closeGift()
+            },
+            // 前往充值页面
+            openCoin () {
+                uni.navigateTo({
+                    url: '../coin/index',
+                })
             }
         }
     }
@@ -103,7 +160,7 @@
             <Fgift ref="giftRef"></Fgift>
         </view>
         <!-- 弹幕 -->
-        <Fdanmu></Fdanmu>
+        <Fdanmu ref="fdanmu"></Fdanmu>
         <!-- 底部礼物栏部分 -->
         <view class="live-bottom__warpper flex align-center justify-between">
             <view class="px-2">
@@ -112,16 +169,16 @@
                 </view>
             </view>
             <view class="flex align-center">
-                <view class="btn btn-icon">
+                <view class="btn btn-icon" @click="openCoin">
                     <text style="font-family: iconfont-unicode;font-size: 80rpx;" class="text-warning">&#xe6cf;</text>
                 </view>
-                <view class="btn btn-icon bg-warning">
+                <view class="btn btn-icon bg-warning" @click="openGift">
                     <text style="font-family: iconfont-unicode;font-size: 40rpx;">&#xe817;</text>
                 </view>
                 <view class="btn btn-icon">
                     <text style="font-family: iconfont-unicode;font-size: 40rpx;" class="text-white">&#xe86e;</text>
                 </view>
-                <view class="btn btn-icon">
+                <view class="btn btn-icon" @click="back">
                     <text style="font-family: iconfont-unicode;font-size: 40rpx;" class="text-white">&#xeca0;</text>
                 </view>
             </view>
@@ -131,6 +188,37 @@
                 <input adjust-position type="text" v-model="content" class="border rounded flex-1 px-2 font-md" placeholder="请输入评论..." style="height: 80rpx;"></input>
                 <view class="bg-main flex align-center justify-center py-2 px-2 ml-2 rounded" @click="submit">
                     <text class="font text-white">发送</text>
+                </view>
+            </view>
+        </uni-popup>
+        <uni-popup type="bottom" ref="giftPopup">
+            <view class="bg-white" style="width: 750rpx;height: 550rpx;">
+                <view class="flex justify-between align-center" style="height: 100rpx;">
+                    <text class="text-main font ml-3">礼物</text>
+                    <view class="flex align-center justify-center" style="width: 100rpx;height: 100rpx;" @click="closeGift">
+                        <text class="text-dark" style="font-family: iconfont-unicode">&#xeca0;</text>
+                    </view>
+                </view>
+                <swiper indicator-dots :duration="500" class="border-top border-bottom" style="height: 350rpx;">
+                    <swiper-item>
+                        <view class="flex flex-wrap">
+                            <view @click="giftActiveId = item.id" class="flex flex-column justify-center align-center" style="width: 187.5rpx;height: 175rpx;" :class="giftActiveId === item.id ? 'border border-main': ''" v-for="item in gifts" :key="item.id">
+                                <image :src="item.image" style="width: 100rpx;height: 100rpx;" mode="aspectFill"></image>
+                                <view class="flex mt-1">
+                                    <text class="text-warning font mr-1">{{ item.name }}</text>
+                                    <text class="text-secondary font">{{ item.coin }}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </swiper-item>
+                </swiper>
+                <view class="flex justify-end align-center" style="height: 100rpx;">
+                    <view @click="openCoin" class="flex align-center justify-center py-2 px-2 mr-3 rounded bg-warning">
+                        <text class="font">充值</text>
+                    </view>
+                    <view @click="sendGift" class="flex align-center justify-center py-2 px-2 mr-3 rounded bg-main">
+                        <text class="font text-white">发送</text>
+                    </view>
                 </view>
             </view>
         </uni-popup>
