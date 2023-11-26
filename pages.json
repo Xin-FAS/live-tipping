@@ -38,6 +38,13 @@
 				"navigationBarTextStyle": "black",
 				"navigationBarBackgroundColor": "white"
 			}
+		},
+		{
+			"path": "pages/create-tive/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {

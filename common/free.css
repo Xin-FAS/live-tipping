@@ -4,12 +4,9 @@
 .scroll-row-item{ display: inline-block!important; }
 /* #endif */
 /* 图标 */
-.iconfont{
-	font-family:iconfont;
-}
 .view,.text{
-	font-size:28rpx; 
-	line-height:1.8; 
+	font-size:28rpx;
+	line-height:1.8;
 	color:#0E151D;
 }
 /* 宽度 */

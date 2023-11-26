@@ -1,19 +1,20 @@
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "iconfont"; /* Project id 4131019 */
-  src: url('//at.alicdn.com/t/c/font_4131019_vk4x6ejllum.woff2?t=1687232424307') format('woff2'),
-       url('//at.alicdn.com/t/c/font_4131019_vk4x6ejllum.woff?t=1687232424307') format('woff'),
-       url('//at.alicdn.com/t/c/font_4131019_vk4x6ejllum.ttf?t=1687232424307') format('truetype');
+  font-family: 'iconfont';  /* Project id 4324186 */
+  src: url('https://at.alicdn.com/t/c/font_4324186_a4a1qph03st.woff2?t=1699536868762') format('woff2'),
+  url('https://at.alicdn.com/t/c/font_4324186_a4a1qph03st.woff?t=1699536868762') format('woff'),
+  url('https://at.alicdn.com/t/c/font_4324186_a4a1qph03st.ttf?t=1699536868762') format('truetype');
 }
 
 .iconfont {
-  font-family: "iconfont" !important;
+  font-family: unicode-icon !important;
   font-size: 16px;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
 }
 
-.iconwode:before {
+/* .iconwode:before {
   content: "\e625";
 }
 
@@ -71,4 +72,4 @@
 
 .iconqingxiduxuanze:before {
   content: "\e608";
-}
+} */

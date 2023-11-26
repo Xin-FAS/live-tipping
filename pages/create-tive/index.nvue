@@ -1,0 +1,12 @@
+<script>
+    export default {
+        data () {
+            return {
+
+            }
+        }
+    }
+</script>
+<template>
+    <view>123</view>
+</template>

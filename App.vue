@@ -5,8 +5,14 @@
             // 加载字体库
             const domModule = weex.requireModule('dom')
             domModule.addRule('fontFace',{
-                'fontFamily': 'iconfont-unicode',
-                'src': "url('http://at.alicdn.com/t/c/font_4324186_a4a1qph03st.ttf?t=1699536868762')"
+                'fontFamily': 'unicode-icon',
+                'src': "url('https://at.alicdn.com/t/c/font_4324186_a4a1qph03st.ttf?t=1699536868762')"
+            })
+            // 监听首页底部中的突起按钮
+            uni.onTabBarMidButtonTap(() => {
+                uni.navigateTo({
+                    url: '/pages/create-tive/index'
+                })
             })
 		},
 		onShow: function() {

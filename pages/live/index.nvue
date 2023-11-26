@@ -170,16 +170,16 @@
             </view>
             <view class="flex align-center">
                 <view class="btn btn-icon" @click="openCoin">
-                    <text style="font-family: iconfont-unicode;font-size: 80rpx;" class="text-warning">&#xe6cf;</text>
+                    <text style="font-size: 80rpx;" class="iconfont text-warning">&#xe6cf;</text>
                 </view>
                 <view class="btn btn-icon bg-warning" @click="openGift">
-                    <text style="font-family: iconfont-unicode;font-size: 40rpx;">&#xe817;</text>
+                    <text class="iconfont" style="font-size: 40rpx;">&#xe817;</text>
                 </view>
                 <view class="btn btn-icon">
-                    <text style="font-family: iconfont-unicode;font-size: 40rpx;" class="text-white">&#xe86e;</text>
+                    <text style=";font-size: 40rpx;" class="text-white iconfont">&#xe86e;</text>
                 </view>
                 <view class="btn btn-icon" @click="back">
-                    <text style="font-family: iconfont-unicode;font-size: 40rpx;" class="text-white">&#xeca0;</text>
+                    <text style=";font-size: 40rpx;" class="text-white iconfont">&#xeca0;</text>
                 </view>
             </view>
         </view>
@@ -196,7 +196,7 @@
                 <view class="flex justify-between align-center" style="height: 100rpx;">
                     <text class="text-main font ml-3">礼物</text>
                     <view class="flex align-center justify-center" style="width: 100rpx;height: 100rpx;" @click="closeGift">
-                        <text class="text-dark" style="font-family: iconfont-unicode">&#xeca0;</text>
+                        <text class="text-dark iconfont">&#xeca0;</text>
                     </view>
                 </view>
                 <swiper indicator-dots :duration="500" class="border-top border-bottom" style="height: 350rpx;">
