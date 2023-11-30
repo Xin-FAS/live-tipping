@@ -42,8 +42,9 @@
 		{
 			"path": "pages/create-tive/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"app-plus": {
+					"titleNView": false
+				}
 			}
 		}
 	],

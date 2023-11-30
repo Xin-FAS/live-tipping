@@ -2,11 +2,165 @@
     export default {
         data () {
             return {
+                url: '',
+                mode: 'SD',
+                enableCamera: true,
+                position: 'back',
+                beauty: 0,
+                whiteness: 0,
+                windowHeight: 0,
+                context: null,
+                statusBarHeight: 0,
+                modeList: [
+                    {
+                        type: 'SD',
+                        text: '标清'
+                    },
+                    {
+                        type: 'HD',
+                        text: '高清'
+                    },
+                    {
+                        type: 'FHD',
+                        text: '超清'
+                    },
+                ],
+                beautyList: [
+                    {
+                        type: '',
+                        text: '美颜'
+                    }
+                ],
+                whitenessList: [
+                    {
 
+                    }
+                ],
+                popupState: 'mode'
+            }
+        },
+        onLoad () {
+            const res = uni.getSystemInfoSync()
+            this.windowHeight = res.windowHeight
+            this.statusBarHeight = res.statusBarHeight
+        },
+        onReady() {
+            this.context = uni.createLivePusherContext('livePusher', this)
+            this.startPreview()
+        },
+        methods: {
+            // 开启预览
+            startPreview () {
+                this.context.startPreview({
+                    success: () => {
+
+                    }
+                })
+            },
+            switchCamera () {
+                this.context.switchCamera()
+            },
+            openPopup (state) {
+                this.popupState = state
+                this.$refs.popup.open()
+            },
+            closePopup () {
+                this.$refs.popup.close()
+            },
+            chooseMode (item) {
+                if (this.mode === item.type) return this.closePopup()
+                this.mode = item.type
+                uni.showToast({
+                    title: '成功切换为' + item.text
+                })
+                this.closePopup()
+            },
+            handleSlider (e) {
+                this[this.popupState] = e.detail.value
             }
         }
     }
 </script>
 <template>
-    <view>123</view>
+    <view>
+        <live-pusher
+            id="livePusher"
+            ref="livePusher"
+            :url="url"
+            :mode="mode"
+            :enable-camera="enableCamera"
+            auto-focus
+            :device-position="position"
+            :beauty="beauty"
+            :whiteness="whiteness"
+            aspect="9:16"
+            :style="'height:' + windowHeight + 'px'"
+            style="width: 750rpx;"
+        >
+        </live-pusher>
+        <view style="position: fixed;height: 500rpx;left: 0;right: 0" :style="'top:' + statusBarHeight + 'px'">
+            <view class="flex justify-center align-center" style="width: 90rpx;height: 90rpx;">
+                <text class="text-white iconfont">&#xeca0;</text>
+            </view>
+            <view class="position-absolute rounded p-2 flex align-center" style="background-color: rgba(0,0,0,.2);left: 90rpx;right: 90rpx;height: 150rpx;">
+                <view class="position-relative rounded" style="width: 120rpx;height: 120rpx;">
+                    <image src="/static/demo/1.jpg" style="width: 120rpx;height: 120rpx;" mode="aspectFill"></image>
+                    <text class="text-white position-absolute font" style="right: 2rpx;bottom: 0">更换封面</text>
+                </view>
+                <view class="flex-1 ml-2 ">
+                    <input type="text" placeholder="请输入标题" class="mb-2">
+                    <text class="text-white font">#请选择分类</text>
+                </view>
+            </view>
+            <view class="position-absolute right-0 flex flex-column" style="width: 100rpx;">
+                <view class="flex flex-column justify-center align-center" @click="switchCamera" style="width: 100rpx;height: 120rpx;">
+                    <text class="iconfont text-white mb-1">&#xe605;</text>
+                    <text class="text-white font">翻转</text>
+                </view>
+                <view class="flex flex-column justify-center align-center" style="width: 100rpx;height: 120rpx;" @click="openPopup('mode')">
+                    <text class="iconfont text-white mb-1">&#xe608;</text>
+                    <text class="text-white font">画质</text>
+                </view>
+                <view class="flex flex-column justify-center align-center" style="width: 100rpx;height: 120rpx;" @click="openPopup('beauty')">
+                    <text class="iconfont text-white mb-1">&#xe632;</text>
+                    <text class="text-white font">美颜</text>
+                </view>
+                <view class="flex flex-column justify-center align-center" style="width: 100rpx;height: 120rpx;" @click="openPopup('whiteness')">
+                    <text class="iconfont text-white mb-1" style="font-size: 50rpx;">&#xe631;</text>
+                    <text class="text-white font">美白</text>
+                </view>
+            </view>
+        </view>
+        <view class="position-fixed bg-main justify-center flex align-center" style="left: 100rpx;right: 100rpx;bottom: 100rpx;height: 120rpx;">
+            <text class="font-md text-white">开始直播</text>
+        </view>
+
+    <!--    画质切换弹窗-->
+        <uni-popup type="bottom" ref="popup">
+            <view class="bg-white">
+                <view class="flex justify-center align-center border-bottom" style="height: 90rpx;">
+                    <text class="font-md" v-if="popupState === 'mode'">切换画质</text>
+                    <text class="font-md" v-if="popupState === 'beauty'">选择美颜</text>
+                    <text class="font-md" v-if="popupState === 'whiteness'">选择美白</text>
+                </view>
+                <view class="" v-if="popupState === 'mode'">
+                    <view class="flex justify-center align-center py-2" :class="mode === item.type ? 'bg-main ' : ''" @click="chooseMode(item)" v-for="item of modeList" :key="item.text">
+                        <text class="font-md" :class="mode===item.type ? 'text-white': ''">{{ item.text }}</text>
+                    </view>
+                </view>
+                <view class="" v-if="popupState === 'beauty'">
+                    <slider :min="0" :max="9" :step="1" @change="handleSlider" :value="beauty" show-value :block-size="18"></slider>
+                </view>
+                <view class="" v-if="popupState === 'whiteness'">
+                    <slider :min="0" :max="9" :step="1" @change="handleSlider" :value="whiteness" show-value :block-size="18"></slider>
+                </view>
+                <view class="f-divider"></view>
+                <view class="flex justify-center align-center" style="height: 90rpx;" @click="closePopup">
+                    <text class="font-md">取消</text>
+                </view>
+            </view>
+        </uni-popup>
+    </view>
 </template>
+
+<style></style>
