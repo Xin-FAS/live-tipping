@@ -40,7 +40,15 @@
 			}
 		},
 		{
-			"path": "pages/create-tive/index",
+			"path": "pages/create-live/index",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/live-room/index",
 			"style": {
 				"app-plus": {
 					"titleNView": false

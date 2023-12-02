@@ -77,6 +77,18 @@
             },
             handleSlider (e) {
                 this[this.popupState] = e.detail.value
+            },
+            // 进入直播页面
+            toLiveRoom () {
+                const params = {
+                    mode: this.mode,
+                    position: this.position,
+                    whiteness: this.whiteness,
+                    beauty: this.beauty
+                }
+                uni.navigateTo({
+                    url: '/pages/live-room/index?options=' + encodeURIComponent(JSON.stringify(params))
+                })
             }
         }
     }
@@ -131,7 +143,7 @@
                 </view>
             </view>
         </view>
-        <view class="position-fixed bg-main justify-center flex align-center" style="left: 100rpx;right: 100rpx;bottom: 100rpx;height: 120rpx;">
+        <view class="position-fixed bg-main justify-center flex align-center" style="left: 100rpx;right: 100rpx;bottom: 100rpx;height: 120rpx;" @click="toLiveRoom">
             <text class="font-md text-white">开始直播</text>
         </view>
 

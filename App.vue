@@ -11,7 +11,7 @@
             // 监听首页底部中的突起按钮
             uni.onTabBarMidButtonTap(() => {
                 uni.navigateTo({
-                    url: '/pages/create-tive/index'
+                    url: '/pages/create-live/index'
                 })
             })
 		},
