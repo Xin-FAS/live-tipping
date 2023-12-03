@@ -18,6 +18,7 @@
                 gifts: [],
                 giftActiveId: 0,
 
+                url: '',
                 mode: 'SD',
                 enableCamera: true,
                 beauty: 0,
@@ -47,8 +48,30 @@
                     },
                 ],
 
-                windowHeight: 0
+                windowHeight: 0,
+
+                popupState: 'mode',
+                context: null,
+                modeList: [
+                    {
+                        type: 'SD',
+                        text: '标清'
+                    },
+                    {
+                        type: 'HD',
+                        text: '高清'
+                    },
+                    {
+                        type: 'FHD',
+                        text: '超清'
+                    },
+                ],
             }
+        },
+        onReady() {
+            // 开启直播预览
+            this.context = uni.createLivePusherContext('livePusher', this)
+            this.startPreview()
         },
         onLoad (e) {
             // 获取设备状态栏高度
@@ -69,12 +92,63 @@
             this.gifts = giftsDemo
         },
         methods: {
-            // 返回上一页
-            back () {
-                uni.navigateBack({
-                    delta: 1
+            // 开启预览
+            startPreview () {
+                this.context.startPreview({
+                    success: () => {
+
+                    }
                 })
             },
+            // 返回上一页
+            back () {
+                uni.showModal({
+                    content: '您是否要结束当前直播？',
+                    success: res => {
+                        if (res.confirm) {
+                            uni.navigateBack({
+                                delta: 2
+                            })
+                        }
+                    }
+                })
+            },
+            // 翻转摄像头
+            switchCamera () {
+                this.context.switchCamera()
+            },
+            // 打开选择弹窗
+            openPopup (state) {
+                this.popupState = state
+                this.$refs.popup.open()
+            },
+            // 关闭选择弹窗
+            closePopup () {
+                this.$refs.popup.close()
+            },
+            // 选择
+            chooseMode (item) {
+                if (this.mode === item.type) return this.closePopup()
+                this.mode = item.type
+                uni.showToast({
+                    title: '成功切换为' + item.text
+                })
+                this.closePopup()
+            },
+            handleSlider (e) {
+                this[this.popupState] = e.detail.value
+            },
+            // 处理底部功能按钮
+            handlerBottomEvent (item) {
+                const handlerMap = {
+                    '翻转': this.switchCamera,
+                    '画质': () => this.openPopup('mode'),
+                    '美颜': () => this.openPopup('beauty'),
+                    '美白': () => this.openPopup('whiteness'),
+                    '更多': () => this.openPopup('more'),
+                }
+                if (item.name in handlerMap) handlerMap[item.name]()
+            }
         }
     }
 </script>
@@ -151,7 +225,7 @@
         <Fdanmu ref="fdanmu"></Fdanmu>
         <!-- 底部礼物栏部分 -->
         <view class="live-bottom__warpper flex align-center justify-between">
-            <view v-for="item in btns" :key="item.icon" class="flex-1 flex flex-column justify-center align-center">
+            <view v-for="item in btns" @click="handlerBottomEvent(item)" :key="item.icon" class="flex-1 flex flex-column justify-center align-center">
                 <text class="iconfont text-white mb-1">{{ item.icon }}</text>
                 <text class="text-white font">{{ item.name }}</text>
             </view>
@@ -164,6 +238,7 @@
                     <text class="font-md" v-if="popupState === 'mode'">切换画质</text>
                     <text class="font-md" v-if="popupState === 'beauty'">选择美颜</text>
                     <text class="font-md" v-if="popupState === 'whiteness'">选择美白</text>
+                    <text class="font-md" v-if="popupState === 'more'">更多</text>
                 </view>
                 <view class="" v-if="popupState === 'mode'">
                     <view class="flex justify-center align-center py-2" :class="mode === item.type ? 'bg-main ' : ''" @click="chooseMode(item)" v-for="item of modeList" :key="item.text">
@@ -175,6 +250,17 @@
                 </view>
                 <view class="" v-if="popupState === 'whiteness'">
                     <slider :min="0" :max="9" :step="1" @change="handleSlider" :value="whiteness" show-value :block-size="18"></slider>
+                </view>
+                <!-- 更多 -->
+                <view class="flex flex-wrap" v-if="popupState === 'more'">
+                    <view class="flex flex-column justify-center align-center" style="width: 150rpx;height: 150rpx;">
+                        <text class="iconfont mb-1">&#xe65d;</text>
+                        <text class="font">暂停</text>
+                    </view>
+                    <view @click="back" class="flex flex-column justify-center align-center" style="width: 150rpx;height: 150rpx;">
+                        <text class="iconfont mb-1">&#xe892;</text>
+                        <text class="font">退出</text>
+                    </view>
                 </view>
                 <view class="f-divider"></view>
                 <view class="flex justify-center align-center" style="height: 90rpx;" @click="closePopup">
