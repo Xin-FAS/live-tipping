@@ -42,7 +42,7 @@ export default {
 </script>
 
 <template>
-    <view class="bg-warning live-scrolling__warpper">
+    <view class="live-scrolling__warpper">
         <scroll-view :show-scrollbar="false" :scroll-into-view="scrollIntoView" scroll-y
                      style="width: 520rpx;height: 300rpx;" scroll-with-animation class="pl-2">
             <view :id="'danmu' + item.id" v-for="item in list" :key="item.id"

@@ -146,7 +146,7 @@
                 </view>
             </view>
             <!-- 金币 -->
-            <view style="height: 80rpx;" class="bg-primary px-2 my-2">
+            <view style="height: 80rpx;" class="px-2 my-2">
                 <view class="flex rounded-circle" style="width: 325rpx;height: 80rpx;background-color: rgba(0,0,0,.4);">
                     <view class="p flex align-center">
                         <text class="text-warning" style="margin-left: 20rpx;font-size: 30rpx;">金币</text>
@@ -238,7 +238,6 @@
 
         .live-top__content {
             height: 80rpx;
-            background-color: sandybrown;
         }
     }
 
