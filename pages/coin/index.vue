@@ -72,7 +72,7 @@ export default {
             <view class="p-2" style="width: 33.3%;box-sizing: border-box" v-for="(item, index) in list" :key="item">
                 <view @click="activeIndex = index;price = item.price" v-if="item.price" :class="activeIndex === index ? 'border-main': ''" class="border rounded flex flex-column justify-center align-center" style="height: 130rpx;">
                     <view class="flex align-center">
-                        <text style="font-family: 'iconfont'" class="text-warning">&#xe6cf;</text>
+                        <text class="iconfont text-warning">&#xe6cf;</text>
                         <text class="font-md font-weight-bold">{{ item.coin }}</text>
                     </view>
                     <text class="font text-light-muted">￥{{ item.price }}</text>

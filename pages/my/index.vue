@@ -1,6 +1,9 @@
 <script>
+import MyListItem from "@/components/common/MyListItem.vue";
+
 export default {
-    name: "index"
+    name: "index",
+    components: { MyListItem }
 }
 </script>
 
@@ -21,6 +24,16 @@ export default {
             </view>
         </view>
         <view class="f-divider"></view>
+        <MyListItem title="我的金币" :show-arrow="false" icon="icon-jinbi1">
+            <text class="text-muted font">50金币 立即充值</text>
+        </MyListItem>
+        <MyListItem title="我的直播" icon="icon-jinbi1">
+            <text class="text-muted font">0</text>
+        </MyListItem>
+        <MyListItem title="我的关注" icon="icon-jinbi1">
+            <text class="text-muted font">0</text>
+        </MyListItem>
+        <MyListItem title="历史记录" icon="icon-jinbi1" />
     </view>
 </template>
 
